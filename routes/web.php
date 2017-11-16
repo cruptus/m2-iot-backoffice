@@ -15,6 +15,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+Route::post('/logout', 'Auth\LoginController@logout')->middleware(['auth'])->name('logout');
+Route::get('/register/{token}', 'HomeController@register')->where('token', '[a-zA-Z0-9]+')->name('register');
+Route::post('/register', 'HomeController@registerPost')->name('registerPost');
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+
+Route::middleware(['auth'])->prefix('administration')->group(function () {
+    Route::get('/', 'HomeController@admin')->name('dashboard');
+    Route::prefix('users')->group(function () {
+        Route::get('/datatable', 'UserController@dataTable')->name('users.datatables');
+
+        Route::get('/', 'UserController@index')->name('users.index');
+        Route::get('/create', 'UserController@show')->name('users.show');
+        Route::post('/create', 'UserController@create')->name('users.create');
+        Route::get('/{user}', 'UserController@view')->name('users.view');
+        Route::post('/{user}', 'UserController@update')->name('users.update');
+        Route::delete('/delete/{user}', 'UserController@delete')->name('users.delete');
+    });
+
+});
