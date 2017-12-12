@@ -18,8 +18,6 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index () {
-        if (Auth::user()->role != 3)
-            return redirect()->route('dashboard');
         return view('administration.users.index');
     }
 

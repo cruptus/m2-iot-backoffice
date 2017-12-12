@@ -50,6 +50,22 @@
                 </ul>
             </li>
             @endif
+            @if(Auth::user()->role == 2)
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Utilisateurs">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-product-hunt"></i>
+                        <span class="nav-link-text">Produits</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseComponents">
+                        <li>
+                            <a href="{{ route('products.index') }}"><i class="fa fa-search"></i> Rechercher</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('products.create') }}"><i class="fa fa-plus"></i> Ajouter</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Commandes">
                 <a class="nav-link" href="{{ route('orders.index') }}">
                     <i class="fa fa-fw fa-credit-card"></i>

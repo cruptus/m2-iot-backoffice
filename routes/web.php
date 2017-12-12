@@ -37,6 +37,16 @@ Route::middleware(['auth'])->prefix('administration')->group(function () {
         Route::delete('/delete/{user}', 'UserController@delete')->name('users.delete');
     });
 
+    Route::prefix('products')->group(function () {
+        Route::get('/datatable', 'ProductController@dataTable')->name('products.datatables');
+        Route::get('/', 'ProductController@index')->name('products.index');
+        Route::get('/create', 'ProductController@show')->name('products.show');
+        Route::post('/create', 'ProductController@create')->name('products.create');
+        Route::get('/{product}', 'ProductController@view')->name('products.view');
+        Route::post('/{product}', 'ProductController@update')->name('products.update');
+        Route::delete('/delete/{product}', 'ProductController@delete')->name('products.delete');
+    });
+
     Route::prefix('orders')->group(function () {
         Route::get('/datatable', 'OrderController@dataTable')->name('orders.datatables');
         Route::get('/', 'OrderController@index')->name('orders.index');
