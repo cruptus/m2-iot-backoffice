@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\RegisterEmail;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
@@ -17,6 +18,8 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index () {
+        if (Auth::user()->role != 3)
+            return redirect()->route('dashboard');
         return view('administration.users.index');
     }
 

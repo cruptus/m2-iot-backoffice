@@ -34,6 +34,7 @@
                     <span class="nav-link-text">Dashboard</span>
                 </a>
             </li>
+            @if(Auth::user()->role == 3)
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Utilisateurs">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-users"></i>
@@ -47,6 +48,13 @@
                         <a href="{{ route('users.create') }}"><i class="fa fa-plus"></i> Ajouter</a>
                     </li>
                 </ul>
+            </li>
+            @endif
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Commandes">
+                <a class="nav-link" href="{{ route('orders.index') }}">
+                    <i class="fa fa-fw fa-credit-card"></i>
+                    <span class="nav-link-text">Commandes</span>
+                </a>
             </li>
         </ul>
         <ul class="navbar-nav sidenav-toggler">

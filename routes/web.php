@@ -26,9 +26,9 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::middleware(['auth'])->prefix('administration')->group(function () {
     Route::get('/', 'HomeController@admin')->name('dashboard');
-    Route::prefix('users')->group(function () {
-        Route::get('/datatable', 'UserController@dataTable')->name('users.datatables');
 
+    Route::middleware(['admin'])->prefix('users')->group(function () {
+        Route::get('/datatable', 'UserController@dataTable')->name('users.datatables');
         Route::get('/', 'UserController@index')->name('users.index');
         Route::get('/create', 'UserController@show')->name('users.show');
         Route::post('/create', 'UserController@create')->name('users.create');
@@ -37,4 +37,9 @@ Route::middleware(['auth'])->prefix('administration')->group(function () {
         Route::delete('/delete/{user}', 'UserController@delete')->name('users.delete');
     });
 
+    Route::prefix('orders')->group(function () {
+        Route::get('/datatable', 'OrderController@dataTable')->name('orders.datatables');
+        Route::get('/', 'OrderController@index')->name('orders.index');
+        Route::get('/{order}', 'OrderController@view')->name('orders.view');
+    });
 });
