@@ -22,6 +22,9 @@ class ApiAuthenticate
             $response = $next($request);
             $response->header('Access-Control-Allow-Origin', '*');
             $response->header('Access-Control-Allow-Methods', 'POST, GET');
+            $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Request-With');
+            $response->header('Access-Control-Allow-Credentials','true');
+
             return $response;
         }
         else
