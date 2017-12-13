@@ -14,5 +14,5 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('apiAuthenticate')->group(function () {
-    Route::get('/test', 'ApiController@test');
+    Route::get('/products', 'ProductController@api');
 });

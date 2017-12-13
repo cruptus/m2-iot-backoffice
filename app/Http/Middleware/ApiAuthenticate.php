@@ -18,9 +18,9 @@ class ApiAuthenticate
         /**
          * Autorization
          */
-        if ($request->header('authorization') == 'Bearer '.env('TOKEN'))
+        if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token'))
             return $next($request);
         else
-            return response('', 403);
+            return response()->json(['error' => 'No Authorization'], 403);
     }
 }

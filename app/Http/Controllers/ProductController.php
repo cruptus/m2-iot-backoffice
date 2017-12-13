@@ -88,6 +88,17 @@ class ProductController extends Controller
         return DataTables::of($products)->make(true);
     }
 
+    public function api (Request $request) {
+        if (!empty($request->header('Id'))) {
+            $user = User::find($request->header('Id'));
+            Product::where('user_id', $user->id)->get()->toJson();
+            if ($user) {
+                return response()->json(Product::where('user_id', $user->id)->get(), 200);
+            }
+        }
+        return response()->json(['error' => 'No ID'], 403);
+    }
+
     public function validator () : array {
         return [
             'titre' => 'required|string',
