@@ -18,8 +18,12 @@ class ApiAuthenticate
         /**
          * Autorization
          */
-        if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token'))
-            return $next($request);
+        if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token')) {
+            $response = $next($request);
+            $response->header('Access-Control-Allow-Origin', '*');
+            $response->header('Access-Control-Allow-Methods', 'POST, GET');
+            return $response;
+        }
         else
             return response()->json(['error' => 'No Authorization'], 403);
     }
