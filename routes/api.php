@@ -14,5 +14,5 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('apiAuthenticate')->group(function () {
-    Route::get('{user}/products', 'ProductController@api');
+    Route::options('{user}/products', 'ProductController@api');
 });

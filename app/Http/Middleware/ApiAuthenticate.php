@@ -28,11 +28,14 @@ class ApiAuthenticate
             $response->header($key, $value);
 
         if ($request->getMethod() == "OPTIONS") {
-            return response('OK', 200, $headers);
+            return $response;
         }
         if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token')) {
             return $response;
         }
+
+
+
         return response()->json(['error' => 'Authorization false'], 403, $headers);
     }
 }
