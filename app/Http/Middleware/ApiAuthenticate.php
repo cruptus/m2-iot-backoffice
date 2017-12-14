@@ -26,14 +26,13 @@ class ApiAuthenticate
         $response = $next($request);
         foreach ($headers as $key => $value)
             $response->header($key, $value);
+
+        if ($request->getMethod() == "OPTIONS") {
+            return response('OK', 200, $headers);
+        }
         if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token')) {
             return $response;
         }
-        if ($request->getMethod() == "OPTIONS") {
-            return $response;
-        }
-
-
         return response()->json(['error' => 'Authorization false'], 403, $headers);
     }
 }
