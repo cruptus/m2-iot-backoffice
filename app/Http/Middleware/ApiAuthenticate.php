@@ -18,6 +18,7 @@ class ApiAuthenticate
         /**
          * Autorization
          */
+        header("Access-Control-Allow-Origin: *");
         $headers = [
             'Access-Control-Allow-Origin' =>  '*',
             'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
@@ -26,19 +27,12 @@ class ApiAuthenticate
         $response = $next($request);
         foreach ($headers as $key => $value)
             $response->header($key, $value);
-
-        if ($request->getMethod() == "OPTIONS") {
-            if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token')) {
-                return $response;
-            }
-            //return response()->json(['OK' => 'OK'], 200, $headers);
-        } else {
-            if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token')) {
-                return $response;
-            }
+        if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token')) {
+            return $response;
         }
-
-
+        if ($request->getMethod() == "OPTIONS") {
+            return $response;
+        }
 
 
         return response()->json(['error' => 'Authorization false'], 403, $headers);
