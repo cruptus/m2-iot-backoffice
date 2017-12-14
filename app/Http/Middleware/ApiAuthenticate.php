@@ -18,17 +18,20 @@ class ApiAuthenticate
         /**
          * Autorization
          */
+        header("Access-Control-Allow-Origin: *");
+        $headers = [
+            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers' => 'Content-Type, X-Auth-Token, Origin, Id, Accept, X-Request-With, Authorization'
+        ];
+        if ($request->getMethod() == "OPTIONS") {
+            return response('OK', 200, $headers);
+        }
         $response = $next($request);
-        $response->header('Accept', 'application/json');
-        $response->header('Access-Control-Allow-Origin', '*');
-        $response->header('Access-Control-Allow-Methods', 'POST, HEAD, PUT, GET, DELETE, OPTIONS');
-        $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Id, Authorization, X-Request-With');
-        $response->header('Access-Control-Allow-Credentials','true');
-        $response->header('Access-Control-Max-Age', '0');
+        foreach ($headers as $key => $value)
+            $response->header($key, $value);
         if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token')) {
             return $response;
         }
-        return $response->json(['error' => 'No Authorization'], 403);
-
+        return response()->json(['error' => 'Authorization false'], 403, $headers);
     }
 }
