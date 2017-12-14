@@ -24,11 +24,11 @@ class ApiAuthenticate
         $response->header('Access-Control-Allow-Methods', 'POST, HEAD, PUT, GET, DELETE, OPTIONS');
         $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Id, Authorization, X-Request-With');
         $response->header('Access-Control-Allow-Credentials','true');
-        $response->header('Access-Control-Max-Age', '1728000');
+        $response->header('Access-Control-Max-Age', '0');
         if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token')) {
             return $response;
         }
-        else
-            return response()->json(['error' => 'No Authorization'], 403);
+        return $response->json(['error' => 'No Authorization'], 403);
+
     }
 }
