@@ -88,9 +88,8 @@ class ProductController extends Controller
         return DataTables::of($products)->make(true);
     }
 
-    public function api (Request $request) {
+    public function api (Request $request, User $user) {
         if (!empty($request->header('Id'))) {
-            $user = User::find($request->header('Id'));
             Product::where('user_id', $user->id)->get()->toJson();
             if ($user) {
                 return response()->json(Product::where('user_id', $user->id)->get(), 200);
