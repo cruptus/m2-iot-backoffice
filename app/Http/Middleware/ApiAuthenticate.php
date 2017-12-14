@@ -18,13 +18,12 @@ class ApiAuthenticate
         /**
          * Autorization
          */
+        $response = $next($request);
+        $response->header('Access-Control-Allow-Origin', '*');
+        $response->header('Access-Control-Allow-Methods', 'POST, HEAD, PUT, GET, DELETE, OPTIONS');
+        $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Id, Authorization, X-Request-With');
+        $response->header('Access-Control-Allow-Credentials','true');
         if ($request->header('authorization') == 'Bearer '.env('TOKEN', 'smartorder_token')) {
-            $response = $next($request);
-            $response->header('Access-Control-Allow-Origin', '*');
-            $response->header('Access-Control-Allow-Methods', 'POST, HEAD, PUT, GET, DELETE, OPTIONS');
-            $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Id, Authorization, X-Request-With');
-            $response->header('Access-Control-Allow-Credentials','true');
-
             return $response;
         }
         else
