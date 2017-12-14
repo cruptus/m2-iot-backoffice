@@ -89,11 +89,9 @@ class ProductController extends Controller
     }
 
     public function api (Request $request, User $user) {
-        if (!empty($request->header('Id'))) {
-            Product::where('user_id', $user->id)->get()->toJson();
-            if ($user) {
-                return response()->json(Product::where('user_id', $user->id)->get(), 200);
-            }
+        Product::where('user_id', $user->id)->get()->toJson();
+        if ($user) {
+            return response()->json(Product::where('user_id', $user->id)->get(), 200);
         }
         return response()->json(['error' => 'No ID'], 403);
     }
