@@ -45,6 +45,7 @@ class UserController extends Controller
     public function create (Request $request) {
         $input = $this->validate($request, $this->validator());
         $input['password'] = 'temporaire';
+        $input['solde'] = 0;
         $input['token'] = md5(random_bytes(10).time().random_bytes(3).$input['name']);
         $user = User::create($input);
         Mail::to($user->email)->send(new RegisterEmail($user));
@@ -75,6 +76,7 @@ class UserController extends Controller
             'name' => 'required|string',
             'email' => 'required|email']);
         $input['role'] = 1;
+        $input['solde'] = 0;
         $input['password'] = 'temporaire';
         $input['token'] = md5(random_bytes(10).time().random_bytes(3).$input['name']);
         $user = User::create($input);
