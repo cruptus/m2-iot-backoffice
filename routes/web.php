@@ -22,34 +22,41 @@ Route::get('/register/{token}', 'HomeController@register')->where('token', '[a-z
 Route::post('/register', 'HomeController@registerPost')->name('registerPost');
 
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
-Route::middleware(['auth'])->prefix('administration')->group(function () {
-    Route::get('/', 'HomeController@admin')->name('dashboard');
 
-    Route::middleware(['admin'])->prefix('users')->group(function () {
-        Route::get('/datatable', 'UserController@dataTable')->name('users.datatables');
-        Route::get('/', 'UserController@index')->name('users.index');
-        Route::get('/create', 'UserController@show')->name('users.show');
-        Route::post('/create', 'UserController@create')->name('users.create');
-        Route::get('/{user}', 'UserController@view')->name('users.view');
-        Route::post('/{user}', 'UserController@update')->name('users.update');
-        Route::delete('/delete/{user}', 'UserController@delete')->name('users.delete');
-    });
+Route::middleware(['auth'])->group(function () {
 
-    Route::prefix('products')->group(function () {
-        Route::get('/datatable', 'ProductController@dataTable')->name('products.datatables');
-        Route::get('/', 'ProductController@index')->name('products.index');
-        Route::get('/create', 'ProductController@show')->name('products.show');
-        Route::post('/create', 'ProductController@create')->name('products.create');
-        Route::get('/{product}', 'ProductController@view')->name('products.view');
-        Route::post('/{product}', 'ProductController@update')->name('products.update');
-        Route::delete('/delete/{product}', 'ProductController@delete')->name('products.delete');
-    });
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::post('/home', 'HomeController@recharger')->name('recharger');
 
     Route::prefix('orders')->group(function () {
         Route::get('/datatable', 'OrderController@dataTable')->name('orders.datatables');
         Route::get('/', 'OrderController@index')->name('orders.index');
         Route::get('/{order}', 'OrderController@view')->name('orders.view');
     });
+
+    Route::middleware(['administration'])->prefix('administration')->group(function () {
+        Route::get('/', 'HomeController@admin')->name('dashboard');
+
+        Route::middleware(['admin'])->prefix('users')->group(function () {
+            Route::get('/datatable', 'UserController@dataTable')->name('users.datatables');
+            Route::get('/', 'UserController@index')->name('users.index');
+            Route::get('/create', 'UserController@show')->name('users.show');
+            Route::post('/create', 'UserController@create')->name('users.create');
+            Route::get('/{user}', 'UserController@view')->name('users.view');
+            Route::post('/{user}', 'UserController@update')->name('users.update');
+            Route::delete('/delete/{user}', 'UserController@delete')->name('users.delete');
+        });
+
+        Route::prefix('products')->group(function () {
+            Route::get('/datatable', 'ProductController@dataTable')->name('products.datatables');
+            Route::get('/', 'ProductController@index')->name('products.index');
+            Route::get('/create', 'ProductController@show')->name('products.show');
+            Route::post('/create', 'ProductController@create')->name('products.create');
+            Route::get('/{product}', 'ProductController@view')->name('products.view');
+            Route::post('/{product}', 'ProductController@update')->name('products.update');
+            Route::delete('/delete/{product}', 'ProductController@delete')->name('products.delete');
+        });
+    });
+
 });

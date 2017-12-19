@@ -70,6 +70,18 @@ class UserController extends Controller
         return DataTables::of(User::query())->make(true);
     }
 
+    public function api (Request $request) {
+        $input = $this->validate($request, [
+            'name' => 'required|string',
+            'email' => 'required|email']);
+        $input['role'] = 1;
+        $input['password'] = 'temporaire';
+        $input['token'] = md5(random_bytes(10).time().random_bytes(3).$input['name']);
+        $user = User::create($input);
+        Mail::to($user->email)->send(new RegisterEmail($user));
+        return response()->json(['success' => 'true']);
+    }
+
     public function validator () : array {
         return [
             'name' => 'required|string',

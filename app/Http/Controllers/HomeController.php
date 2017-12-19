@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -14,7 +16,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('administration.dashboard');
+        if (Auth::user()->role > 1)
+            return redirect()->route('dashboard');
+        $user = Auth::user();
+        $commandes = Order::where('user_id', $user->id)->count();
+        return view('users.dashboard', compact('user', 'commandes'));
+    }
+
+    public function recharger (Request $request) {
+        $user = Auth::user();
+        if ($user->role == 1) {
+            $validation = $this->validate($request, [
+                    'credit' => 'required|numeric'
+                ]);
+            $user->solde = $user->solde + $validation['credit'];
+            $user->save();
+        }
+        return redirect()->route('home');
     }
 
     public function admin () {
