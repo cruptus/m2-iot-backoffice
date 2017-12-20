@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Log;
 
 class ApiAuthenticate
 {
@@ -25,6 +26,7 @@ class ApiAuthenticate
             'Access-Control-Allow-Headers' => 'Content-Type, X-Auth-Token, Origin, Id, Accept, X-Request-With, Authorization'
         ];
         if ($request->getMethod() === "OPTIONS") {
+            Log::info('REQUEST OPTIONS');
             return response('', 200, $headers);
         }
         $response = $next($request);
