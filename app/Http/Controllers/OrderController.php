@@ -60,6 +60,7 @@ class OrderController extends Controller
         try {
             $uid = $request->all()[0]['uid'];
             $total = 0;
+            $orders = [];
             foreach ($request->all()[0]['products'] as $product) {
                 $total = $total + $product['prix'];
             }
@@ -68,20 +69,21 @@ class OrderController extends Controller
                 if($user->solde >= $total) {
                     $user->solde = $user->solde - $total;
                     $user->save();
-
-
+                    $order = Order::create(['user_id' => $user->id, 'restaurent_id' => 4, 'total' => $total]);
+                    foreach ($request->all()[0]['products'] as $product) {
+                        $orders[] = ['order_id' => $order->id, 'product_id' => $product['id']];
+                    }
+                    DB::table('orders_products')->insert($orders);
+                    Log::info('success');
+                    return response()->json(['success' => true]);
                 }
             }
         } catch (\Exception $exception) {
+            Log::info('exception');
             return response()->json(['success' => false], 403);
         }
+        Log::info('error');
         return response()->json(['success' => false], 403);
-
-        Log::info($request->all());
-        $uid =
-        Log::info();
-
-        return response()->json(['success' => true]);
     }
 
 }
