@@ -11,11 +11,11 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="float-left"><i class="fa fa-table"></i> Modification d'un produit</div>
-        @if(!empty($produit))
-                    <form action="{{ route('products.delete', $produit->id) }}" method="POST">
+        @if(!empty($product))
+                    <form action="{{ route('products.delete', $product->id) }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('delete') }}
-                        <input type="hidden" value="{{ $produit->id }}" name="id">
+                        <input type="hidden" value="{{ $product->id }}" name="id">
                         <button class="btn btn-danger float-right" type="submit">Supprimer</button>
                     </form>
                 @endif

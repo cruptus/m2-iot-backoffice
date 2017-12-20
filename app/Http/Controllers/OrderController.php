@@ -53,4 +53,11 @@ class OrderController extends Controller
         return DataTables::of($query)->make(true);
     }
 
+
+    public function api (Request $request) {
+        $products = $request->get('products');
+
+
+    }
+
 }
