@@ -57,7 +57,7 @@ class OrderController extends Controller
 
     public function api (Request $request) {
         Log::info($request->all());
-        Log::info($request->all()['uid']);
+        Log::info($request->all()[0]['uid']);
 
         return response()->json(['success' => true]);
     }
