@@ -19,6 +19,9 @@ Route::middleware('apiAuthenticate')->group(function () {
 
     Route::options('user', 'UserController@api');
     Route::post('user', 'UserController@api');
+
+    Route::options('{user}/order', 'OrderController@api');
+    Route::get('{user}/order', 'OrderController@api');
 });
 
 
