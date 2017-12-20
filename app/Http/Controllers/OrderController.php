@@ -6,6 +6,7 @@ use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
@@ -55,9 +56,9 @@ class OrderController extends Controller
 
 
     public function api (Request $request) {
-        $products = $request->get('products');
+        Log::info($request->all());
 
-
+        return response()->json(['success' => true]);
     }
 
 }
