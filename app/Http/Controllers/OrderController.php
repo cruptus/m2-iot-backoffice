@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -56,8 +57,24 @@ class OrderController extends Controller
 
 
     public function api (Request $request) {
+        try {
+            $uid = $request->all()[0]['uid'];
+            $total = 0;
+            foreach ($request->all()[0]['products'] as $product) {
+                $total = $total + $product['prix'];
+            }
+            $user = User::where('uid', $uid)->first();
+            if ($user) {
+
+            }
+        } catch (\Exception $exception) {
+            return response()->json(['success' => false], 403);
+        }
+        return response()->json(['success' => false], 403);
+
         Log::info($request->all());
-        Log::info($request->all()[0]['uid']);
+        $uid =
+        Log::info();
 
         return response()->json(['success' => true]);
     }
