@@ -65,7 +65,12 @@ class OrderController extends Controller
             }
             $user = User::where('uid', $uid)->first();
             if ($user) {
+                if($user->solde >= $total) {
+                    $user->solde = $user->solde - $total;
+                    $user->save();
 
+
+                }
             }
         } catch (\Exception $exception) {
             return response()->json(['success' => false], 403);
