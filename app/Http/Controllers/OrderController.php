@@ -30,18 +30,19 @@ class OrderController extends Controller
      */
     public function view (Order $order) {
         $user = Auth::user();
-        if ($user->id == $order->user_id || $user->id == $order->restaurent_id || $user->role == 3)
-            return view('administration.orders.show', compact('order'));
+        if ($user->id == $order->user_id || $user->id == $order->restaurent_id || $user->role == 3) {
+            $products = Product::join('orders_products', 'orders_products.product_id', 'products.id')
+                ->where('orders_products.order_id', $order->id)
+                ->select(['products.titre as titre',
+                    'products.description as description',
+                    'products.image as image',
+                    'products.prix as prix'
+                ])
+                ->get();
+            return view('administration.orders.show', compact('products', 'order'));
+        }
 
-        $products = Product::join('orders_products', 'orders_products.product_id', 'products.id')
-                            ->where('orders_products.order_id', $order->id)
-                            ->select(['products.titre as titre',
-                                'products.description as description',
-                                'products.image as image',
-                                'products.prix as prix'
-                            ])
-                            ->get();
-        return redirect()->route('orders.index', compact('products', 'order'));
+        return redirect()->route('orders.index');
     }
 
     /**
