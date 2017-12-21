@@ -24,14 +24,14 @@
                 @foreach($products as $product)
                     <tr>
                         <td>{{ $product->titre }}</td>
-                        <td>{{ $product->prix }}</td>
+                        <td>{{ $product->prix }} €</td>
                     </tr>
                 @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
                         <td class="text-right">Total</td>
-                        <td>{{ $order->total }}</td>
+                        <td>{{ $order->total }} €</td>
                     </tr>
                 </tfoot>
 
