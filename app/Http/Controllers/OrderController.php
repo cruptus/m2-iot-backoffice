@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Product;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,16 @@ class OrderController extends Controller
         $user = Auth::user();
         if ($user->id == $order->user_id || $user->id == $order->restaurent_id || $user->role == 3)
             return view('administration.orders.show', compact('order'));
-        return redirect()->route('orders.index');
+
+        $products = Product::join('orders_products', 'orders_products.product_id', 'products.id')
+                            ->where('orders_products.order_id', $order->id)
+                            ->select(['products.titre as titre',
+                                'products.description as description',
+                                'products.image as image',
+                                'products.prix as prix'
+                            ])
+                            ->get();
+        return redirect()->route('orders.index', compact('products', 'order'));
     }
 
     /**
