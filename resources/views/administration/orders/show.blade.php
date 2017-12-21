@@ -14,20 +14,27 @@
         </div>
         <div class="card-body">
             <table class="table table-responsive table-bordered">
-                <tr>
-                    <th>Libelle</th>
-                    <th>Prix</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Libelle</th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
                 @foreach($products as $product)
                     <tr>
                         <td>{{ $product->titre }}</td>
                         <td>{{ $product->prix }}</td>
                     </tr>
                 @endforeach
-                <tr>
-                    <td></td>
-                    <td>{{ $order->total }}</td>
-                </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="text-right">Total</td>
+                        <td>{{ $order->total }}</td>
+                    </tr>
+                </tfoot>
+
 
             </table>
         </div>
