@@ -13,7 +13,7 @@
             <div class="float-left"><i class="fa fa-table"></i> Visualisation de la commande N° {{ $order->id }}</div>
         </div>
         <div class="card-body">
-            <table class="table table-responsive table-bordered">
+            <table class="table table-responsive table-bordered" style="display: inline-table !important;">
                 <thead>
                     <tr>
                         <th>Libelle</th>
