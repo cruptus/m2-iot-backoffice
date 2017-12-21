@@ -21,7 +21,7 @@
                 @foreach($products as $product)
                     <tr>
                         <td>{{ $product->titre }}</td>
-                        <td>{{ $prix }}</td>
+                        <td>{{ $product->prix }}</td>
                     </tr>
                 @endforeach
                 <tr>
